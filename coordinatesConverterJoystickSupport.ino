@@ -32,7 +32,7 @@ void loop()
   dX = 0;
   int xVal = analogRead(x) - xOffset;
   if (xVal > 50) dX = 1;
-  if (xVal < -50) dY = -1;
+  if (xVal < -50) dX = -1;
 
   dY = 0;
   int yVal = analogRead(y) - yOffset;
