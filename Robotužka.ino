@@ -5,10 +5,10 @@ static float current[2] = {0.0, 0.0};
 const int pinServo1 = 9;
 const int pinServo2 = 10;
 const int pinServo3 = 11;
-const int armA = 10;
-const int armB = 10;
+const float armA = 80.0;
+const float armB = 80.0;
 
-float i = 0.1;
+float i = 1;
 
 const byte x = A0;
 const byte y = A1;
@@ -33,9 +33,9 @@ void setup() {
   servo3.attach(pinServo3);
 
   // Reset servos
-  servo1.write(180);
-  servo2.write(180);
-  servo3.write(180);
+  servo1.write(0);
+  servo2.write(0);
+  servo3.write(0);
   
   pinMode(13, OUTPUT);
   pinMode(x, INPUT);
@@ -62,14 +62,42 @@ void loop()
   if (cY < 0) cY = 0;
 
 
-  Serial.print(cX);
-  Serial.print(" ");
-  Serial.println(cY);
+ // Serial.print(cX);
+  //Serial.print(" ");
+  //Serial.println(cY);
   servo1.write(GetAngle(cX, cY));
-  //servo2.write((asin((armB/armA)*sin((acos((pow(GetDistance(xVal, yVal), 2)-pow(armA, 2)-pow(armB, 2))/(-2*armA*armB)))))));
-  //servo3.write(acos((pow(GetDistance(xVal, yVal), 2)-pow(armA, 2)-pow(armB, 2))/(-2*armA*armB)));
 
-  delay(5);
+  
+  float servo2deg3 = (2*GetDistance(cX, cY)*armB);
+
+  float servo2deg0 = pow(GetDistance(cX, cY), 2)-pow(armA, 2)+pow(armB, 2);
+  
+  float servo2deg = (pow(GetDistance(cX, cY), 2)-pow(armA, 2)+pow(armB, 2))/(2*GetDistance(cX, cY)*armB);
+
+  float servo2deg2 = acos(servo2deg);
+//  Serial.print(analogRead(x));
+  float servo3deg1 = GetDistance(cX, cY);
+  float servo3deg2 = pow(armA, 2)+pow(armB, 2)-pow(servo3deg1, 2);
+  float servo3deg3 = servo3deg2/(2*armA*armB);
+  float servo3deg4 = acos(servo3deg3);
+//  Serial.print("1: ");
+//  Serial.println(servo3deg1);
+//  Serial.print("2: ");
+//   Serial.println(servo3deg2);
+//   Serial.print("3: ");
+//    Serial.println(servo3deg3);
+//    Serial.print("4: ");
+//     Serial.println(servo3deg4);
+//     Serial.println(GetDistance(cX, cY));
+  
+
+ 
+  //Serial.print(servo2deg);
+  //Serial.print(" ");
+  Serial.println(servo3deg4);
+  servo2.write(servo2deg2*180/3.1415926);
+  servo3.write(servo3deg4*180/3.1415926);
+  delay(8);
 }
 
 float GetAngle(float x, float y) {
@@ -78,7 +106,7 @@ float GetAngle(float x, float y) {
   return a + 90;
 }
 
-float GetDistance(int x, int y) {
+float GetDistance(float x, float y) {
   float d = sqrt(pow(x, 2) + pow(y, 2));
   return d;
 }
