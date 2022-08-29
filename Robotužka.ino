@@ -1,12 +1,12 @@
 #include <Servo.h> 
-int servo1 = 1;
-int servo2 = 2;
-int servo3 = 3;
+const int servo1 = 1;
+const int servo2 = 2;
+const int servo3 = 3;
 
 // Create servo objects
-Servo servo1;
-Servo servo2;
-Servo servo3;
+Servo servo1; // The servo that rotates the whole arm
+Servo servo2; // The first limb
+Servo servo3; // The second limb
 
 void setup() {
   // Attach servo objects to Arduino pins
