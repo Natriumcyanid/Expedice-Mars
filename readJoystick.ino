@@ -32,12 +32,16 @@ void loop() {
   // printing "SWITCH PRESSED" to serial when switch is pressed
   if (digitalRead(sw) == LOW) Serial.println("SWITCH PRESSED");
 
-  // printing measured values to serial
+  // printing measured values to serial if they aren't 0
+    if (xVal != 0) {
   Serial.print("x value: ");
   Serial.println(xVal);
+  }
 
+  if (yVal != 0) {
   Serial.print("y value: ");
   Serial.println(yVal);
+  }
   
   // 8ms delay
   delay(8);
